@@ -1,0 +1,46 @@
+@import '@/Common.scss';
+
+.todoItem {
+    font-family: $font;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    list-style:none;
+    border: none;
+    margin: 10px 0px;
+}
+
+.itemContent {
+    width: 80%;
+}
+
+.checkBtn, .deleteBtn {
+    border: none;
+    background-color: transparent;
+    padding: 0px;
+}
+
+.checkBtn {
+    margin: 0px 5px;
+}
+
+.checked {
+    text-decoration:line-through
+}
+
+.itemBtns {
+    display: flex;
+}
+
+.modifyInput {
+    width: 100%;
+    border: 2px groove #9E1814;
+    border-radius: 5px;
+    position: relative;
+    padding: 5px;
+    background-color: transparent;
+}
+
+.modifyInput:focus {
+    outline: none;
+}

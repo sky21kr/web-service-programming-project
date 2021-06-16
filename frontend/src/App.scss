@@ -1,0 +1,25 @@
+$theme-colors: (
+  "primary": #C95A56,
+);
+
+@import '~bootstrap/scss/bootstrap';
+@import './Common.scss';
+
+.body {
+    background-color: #ffeeee;
+    font-family: $font;
+}
+
+.contents {
+    display: flex;
+}
+
+.leftSide {
+    padding: 30px;
+}
+
+.rightSide {
+    padding: 30px;
+    display: flex;
+    flex-wrap: wrap;
+}

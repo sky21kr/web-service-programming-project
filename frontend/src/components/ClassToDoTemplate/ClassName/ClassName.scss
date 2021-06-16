@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700&display=swap');
+@import '@/Common.scss';
+
+.classTitle {
+    font-family: $font;
+    font-weight: 700;
+    font-size: 18px; 
+    margin: 5px 0px;
+}

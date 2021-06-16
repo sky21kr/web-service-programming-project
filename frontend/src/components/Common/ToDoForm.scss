@@ -1,0 +1,31 @@
+@import '@/Common.scss';
+
+.inputForm {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.toDoInput {
+    width: 80%;
+    font-family: $font;
+    font-weight: 400;
+    font-size: 14px;
+    border-radius: 3px;
+    border: 2px solid #C7CEDA;
+    padding: 5px;
+    margin: 5px 0px;
+    background-color: transparent;
+    transition : border-color 0.2s;
+}
+
+.toDoInput:focus {
+    outline: none;
+    border: 2px solid #9E1814;
+    background-color: transparent;
+    transition: border-color 0.2s;
+}
+
+.toDoInput::placeholder {
+    color: rgb(87, 87, 87)
+}

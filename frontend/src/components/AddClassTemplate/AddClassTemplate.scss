@@ -1,0 +1,62 @@
+.addBtnTemplate {
+    width: 300px;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.addBtnBorder {
+    border: 5px solid #C95A56;
+    border-radius: 100%;
+    width: 200px;
+    height: 200px;
+    transition-duration: 0.1s;
+}
+
+.addBtnBorder:hover {
+    border: 10px solid #C95A56;
+    border-radius: 100%;
+    width: 200px;
+    height: 200px;
+    transition-duration: 0.1s;
+}
+
+.cross {
+    left: calc(50% - 5px);
+    top: calc(50% - 50px);
+    width: 10px;
+    height: 100px;
+    background-color: #C95A56;
+    position: relative;
+    transition-duration: 0.1s;
+}
+
+.addBtnBorder:hover .cross {
+    left: calc(50% - 10px);
+    top: calc(50% - 55px);
+    width: 20px;
+    height: 110px;
+    transition-duration: 0.1s;
+}
+
+
+.cross:after {
+  background: #C95A56;
+  content: "";
+  left: calc(50% - 50px);
+  top: calc(50% - 5px);
+  height: 10px;
+  width: 100px;
+  position: absolute;
+  transition-duration: 0.1s;
+}
+
+.addBtnBorder:hover .cross:after {
+    content: "";
+    left: calc(50% - 55px);
+    top: calc(50% - 10px);
+    height: 20px;
+    width: 110px;
+    transition-duration: 0.1s;
+  }
