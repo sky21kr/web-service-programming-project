@@ -2,15 +2,17 @@ from django.db import models
 
 # Create your models here.
 class ClassTable(models.Model):
-    classId = models.TextField()
+    classId = models.AutoField(primary_key=True)
     className = models.TextField()
 
     # def __str__(self):
     #     return self.text
 
 class ToDoTable(models.Model):
-    toDoId = models.TextField()
+    classId = models.ForeignKey("ClassTable", related_name="classTable", on_delete=models.CASCADE, db_column="classId")
+    toDoId = models.AutoField(primary_key=True)
     contents = models.TextField()
 
 class MainToDoTable(models.Model):
+    toDoId = models.AutoField(primary_key=True)
     contents = models.TextField()
