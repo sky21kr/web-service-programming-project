@@ -5,6 +5,8 @@ import AddClassTemplate from '@/components/AddClassTemplate/AddClassTemplate'
 import React, { Component } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import moment from 'moment'
+import axios from 'axios';
+import { customAxios } from '@/lib/customAxios';
 import './App.scss'
 
 class App extends Component {
@@ -15,6 +17,16 @@ class App extends Component {
 
   // 체크 후 자정이 넘으면 삭제
   componentDidMount() {
+    customAxios.get('/api/class')
+      .then((r) => {
+        console.log('custom', r)
+      })
+
+    customAxios.get('/api/main-to-do')
+      .then((r) => {
+        console.log('custom', r.data)
+      })
+
     let newClassList = []
     if (localStorage.getItem("classList")) {
       newClassList = JSON.parse(localStorage.getItem("classList")).map((cls) => {

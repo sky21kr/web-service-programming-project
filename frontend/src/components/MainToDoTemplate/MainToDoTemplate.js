@@ -2,10 +2,19 @@ import React, { Component } from 'react'
 import ToDoForm from '@/components/Common/ToDoForm'
 import ToDoList from '@/components/Common/ToDoList'
 import UserInfo from './UserInfo/UserInfo'
+import { customAxios } from '@/lib/customAxios';
 import moment from 'moment'
 import './MainToDoTemplate.scss'
 
 class MainToDoTemplate extends Component {
+    componentDidMount() {
+        customAxios.get('/api/main-to-do')
+        .then((r) => {
+          console.log('custom', r.data)
+  
+          
+        })
+    }
 
     handleDeleteItem = (id) => {
         const newList = this.props.toDoList.filter((list) => {
