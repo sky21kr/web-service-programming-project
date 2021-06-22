@@ -138,13 +138,14 @@ class ClassToDoTemplate extends Component {
                 </div>
                 <div className="classToDoFooter">
                 </div>
-                {/* <SubmitClassModal
+                <SubmitClassModal
                     mode={'modify'}
+                    className={this.props.className}
+                    classId={this.props.classId}
                     modalShow={modifyModalShow}
-                    classInfo={info}
                     modifyClass={modifyClass}
                     handleClose={this.handleModifyModalClose}
-                /> */}
+                />
                 <CommonModal
                     modalShow={deleteModalShow}
                     handleClose={this.handleDeleteModalClose}

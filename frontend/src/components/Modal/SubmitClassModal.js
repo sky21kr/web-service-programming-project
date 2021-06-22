@@ -21,7 +21,7 @@ class SubmitClassModal extends Component {
         const modifyClassInfo = {
             name: this.state.name,
         }
-        this.props.modifyClass(this.props.classInfo.id, modifyClassInfo)
+        this.props.modifyClass(this.props.classId, modifyClassInfo)
         this.handleClose()
     }
 
@@ -34,7 +34,7 @@ class SubmitClassModal extends Component {
 
 
     render() {
-        const { modalShow, classInfo, mode } = this.props
+        const { modalShow, className, mode } = this.props
 
         return (
             <Modal show={modalShow} onHide={this.handleClose}>
@@ -47,7 +47,7 @@ class SubmitClassModal extends Component {
                     <div>
                         수업이름
                         <input
-                            defaultValue={mode === 'modify' ? classInfo.name : ''}
+                            defaultValue={mode === 'modify' ? className: ''}
                             onChange={this.handleChange}
                         />
                     </div> 
