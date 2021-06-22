@@ -10,7 +10,7 @@ class App extends Component {
   state = {
     classList: [],
   }
-  
+
   componentDidMount() {
     this.fetchClass();
   }
@@ -67,7 +67,7 @@ class App extends Component {
                 className={cls.className}
                 classId={cls.classId}
                 modifyClass={this.modifyClass}
-                deleteClass={() => this.deleteClass(cls.id)}
+                deleteClass={() => this.deleteClass(cls.classId)}
                 changeClassToDoList={this.changeClassToDoList}
               />
     })
