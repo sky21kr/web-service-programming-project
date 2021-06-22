@@ -10,7 +10,6 @@ import './App.scss'
 
 class App extends Component {
   state = {
-    mainToDoList: [],
     classList: [],
   }
 
@@ -18,40 +17,42 @@ class App extends Component {
   componentDidMount() {
     customAxios.get('/api/class')
       .then((r) => {
-        console.log('custom', r)
-      })
-
-
-
-    let newClassList = []
-    if (localStorage.getItem("classList")) {
-      newClassList = JSON.parse(localStorage.getItem("classList")).map((cls) => {
-        const newCls = cls
-        newCls.toDoList = cls.toDoList.filter((toDoItem) => {
-          if(moment(toDoItem.checkedTime).add(1, 'd') < moment()) return false
-          return true
+        console.log('classList', r.data)
+        this.setState({
+          classList: r.data
         })
-        return newCls
       })
-    }
-
-    let newMainToDoList = []
-
-    if (localStorage.getItem("mainToDoList")) {
-      newMainToDoList = JSON.parse(localStorage.getItem("mainToDoList")).filter((toDoItem) => {
-        if(moment(toDoItem.checkedTime).add(1, 'd') < moment()) return false
-        return true
-      })
-    } 
 
 
-    this.setState({
-      mainToDoList: newMainToDoList || [],
-      classList: newClassList || []
-    }, () => {
-      localStorage.setItem('mainToDoList', JSON.stringify(this.state.mainToDoList))
-      localStorage.setItem('classList', JSON.stringify(this.state.classList))
-    })
+    // let newClassList = []
+    // if (localStorage.getItem("classList")) {
+    //   newClassList = JSON.parse(localStorage.getItem("classList")).map((cls) => {
+    //     const newCls = cls
+    //     newCls.toDoList = cls.toDoList.filter((toDoItem) => {
+    //       if(moment(toDoItem.checkedTime).add(1, 'd') < moment()) return false
+    //       return true
+    //     })
+    //     return newCls
+    //   })
+    // }
+
+    // let newMainToDoList = []
+
+    // if (localStorage.getItem("mainToDoList")) {
+    //   newMainToDoList = JSON.parse(localStorage.getItem("mainToDoList")).filter((toDoItem) => {
+    //     if(moment(toDoItem.checkedTime).add(1, 'd') < moment()) return false
+    //     return true
+    //   })
+    // } 
+
+
+    // this.setState({
+    //   mainToDoList: newMainToDoList || [],
+    //   classList: newClassList || []
+    // }, () => {
+    //   localStorage.setItem('mainToDoList', JSON.stringify(this.state.mainToDoList))
+    //   localStorage.setItem('classList', JSON.stringify(this.state.classList))
+    // })
   }
 
   // 형식
@@ -113,17 +114,26 @@ class App extends Component {
   }
 
   addClass = (className) => {
-    this.setState({
-      classList: [...this.state.classList,
-        {
-          id: uuidv4(),
-          name: className,
-          toDoList: [],
-        }
-      ]
-    }, () => {
-      localStorage.setItem('classList', JSON.stringify(this.state.classList))
+    console.log(className)
+    
+    customAxios.post('/api/class/', {
+      className,
     })
+      .then((r) => {
+        console.log('r', r)
+      })
+
+    // this.setState({
+    //   classList: [...this.state.classList,
+    //     {
+    //       id: uuidv4(),
+    //       name: className,
+    //       toDoList: [],
+    //     }
+    //   ]
+    // }, () => {
+    //   localStorage.setItem('classList', JSON.stringify(this.state.classList))
+    // })
   }
 
   modifyClass = (classId, modifyClassInfo) => {
@@ -153,8 +163,9 @@ class App extends Component {
 
     const classTemplateList = classList.map((cls) => {
       return <ClassToDoTemplate
-                key={cls.id}
-                info={cls}
+                key={cls.classId}
+                className={cls.className}
+                classId={cls.classId}
                 modifyClass={this.modifyClass}
                 deleteClass={() => this.deleteClass(cls.id)}
                 changeClassToDoList={this.changeClassToDoList}

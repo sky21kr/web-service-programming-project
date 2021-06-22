@@ -8,47 +8,72 @@ import './ClassToDoTemplate.scss'
 import { FaEllipsisH } from 'react-icons/fa'
 import { Dropdown } from 'react-bootstrap'
 import moment from 'moment'
+import { customAxios } from '@/lib/customAxios';
 
 class ClassToDoTemplate extends Component {
     state = {
         modifyModalShow: false,
         deleteModalShow: false,
+        toDoList: [],
     }
 
+    componentDidMount() {
+        this.fetchToDo();
+    }
+
+    fetchToDo = () => {
+        customAxios.get(`/api/to-do`)
+          .then((r) => {
+            this.setState({
+                toDoList: r.data.filter((todo) => todo.classId === this.props.classId)
+            })
+          })
+    }
 
     handleDeleteItem = (id) => {
-        const newList = this.props.info.toDoList.filter((list) => {
-            return list.id !== id
-        })
-        this.props.changeClassToDoList(this.props.info.id, newList)
+        customAxios.delete(`/api/to-do/${id}`)
+          .then(() => {
+              this.fetchToDo();
+          })
     }
 
     handleCheckItem = (id) => {
-        const newList = this.props.info.toDoList.map((list) => {
-            if( list.id === id ) {
-                if(list.checkedTime) list.checkedTime = null
-                else list.checkedTime = moment().format('YYYY-MM-DD')
-                return list
-            } else return list
+
+        const target = this.state.toDoList.find((row) => {
+            return row.toDoId == id
         })
-        this.props.changeClassToDoList(this.props.info.id, newList)
+
+        customAxios.put(`/api/to-do/${id}/`, {
+            classId: this.props.classId,
+            contents: target.contents,
+            checkedDate: target.checkedDate ? '' : moment().format('YYYY-MM-DD')
+        })
+        .then(() => {
+            this.fetchToDo();
+        })
+    
     }
 
-    modifyItemContent = (id, content) => {
-        const newList = this.props.info.toDoList.map((list) => {
-            if( list.id === id ) {
-                const newList = {
-                    ...list, value: content
-                }
-                return newList
-            } else return list
+    modifyItemContent = (id, contents) => {
+        console.log(id, contents)
+        customAxios.put(`/api/to-do/${id}/`, {
+            classId: this.props.classId,
+            contents,    
         })
-        this.props.changeClassToDoList(this.props.info.id, newList)
+        .then(() => {
+            this.fetchToDo();
+        })
     }
 
     handleSubmit = (newItem) => {
-        const newList = [...this.props.info.toDoList, newItem]
-        this.props.changeClassToDoList(this.props.info.id, newList)
+        console.log('newItem', newItem)
+        customAxios.post(`/api/to-do/`, {
+            ...newItem,
+            classId: this.props.classId,
+        })
+        .then((r) => {
+            this.fetchToDo();
+        })
     }
 
     clickModifyBtn = () => {
@@ -97,7 +122,7 @@ class ClassToDoTemplate extends Component {
                 </div>
                 <div className="classToDoHeader">
                     <ClassName
-                        title={info.name}
+                        title={this.props.className}
                     />
                     <ToDoForm
                         handleSubmit={this.handleSubmit}
@@ -105,7 +130,7 @@ class ClassToDoTemplate extends Component {
                 </div>
                 <div className="classTemplateBody">
                     <ToDoList
-                        toDoList={info.toDoList}
+                        toDoList={this.state.toDoList}
                         handleDeleteItem={this.handleDeleteItem}
                         handleCheckItem={this.handleCheckItem}
                         modifyItemContent={this.modifyItemContent}
@@ -113,13 +138,13 @@ class ClassToDoTemplate extends Component {
                 </div>
                 <div className="classToDoFooter">
                 </div>
-                <SubmitClassModal
+                {/* <SubmitClassModal
                     mode={'modify'}
                     modalShow={modifyModalShow}
                     classInfo={info}
                     modifyClass={modifyClass}
                     handleClose={this.handleModifyModalClose}
-                />
+                /> */}
                 <CommonModal
                     modalShow={deleteModalShow}
                     handleClose={this.handleDeleteModalClose}
