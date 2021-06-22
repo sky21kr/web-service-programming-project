@@ -47,6 +47,9 @@ class UserInfo extends Component {
         })
         .then((r) => {
             this.fetchUser();
+            this.setState({
+                previewURL: userInfo.previewURL,
+            })
         })
     }
 
