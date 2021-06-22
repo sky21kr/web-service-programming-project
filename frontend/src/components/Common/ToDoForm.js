@@ -16,7 +16,7 @@ class ToDoForm extends Component {
             return
         }
 
-        const newItem = {id: uuidv4(), value: this.state.input, checkedTime: null}
+        const newItem = {contents: this.state.input, checkedDate: ''}
         this.props.handleSubmit(newItem)
         this.setState({
             input: "",

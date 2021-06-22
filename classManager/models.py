@@ -9,10 +9,13 @@ class ClassTable(models.Model):
     #     return self.text
 
 class ToDoTable(models.Model):
-    classId = models.ForeignKey("ClassTable", related_name="classTable", on_delete=models.CASCADE, db_column="classId")
+    classId = models.ForeignKey("ClassTable", related_name="classTable", on_delete=models.CASCADE, db_column="class")
     toDoId = models.AutoField(primary_key=True)
     contents = models.TextField()
+    checkedDate = models.TextField(blank=True)
+
 
 class MainToDoTable(models.Model):
     toDoId = models.AutoField(primary_key=True)
     contents = models.TextField()
+    checkedDate = models.TextField(blank=True)

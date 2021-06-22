@@ -5,12 +5,12 @@ class ToDoList extends Component {
     render() {
         const { toDoList, handleCheck, handleDeleteItem, handleCheckItem, modifyItemContent} = this.props
 
-        const list = toDoList.map(({id, value, checkedTime}) => (
+        const list = toDoList.map(({toDoId, contents, checkedDate}) => (
             <ToDoItem
-                key={id}
-                id={id}
-                value={value}
-                checkedTime={checkedTime}
+                key={toDoId}
+                id={toDoId}
+                value={contents}
+                checkedTime={checkedDate}
                 handleCheck={handleCheck}
                 handleDeleteItem={handleDeleteItem}
                 handleCheckItem={handleCheckItem}

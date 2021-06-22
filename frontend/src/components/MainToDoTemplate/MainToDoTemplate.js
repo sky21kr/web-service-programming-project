@@ -7,53 +7,63 @@ import moment from 'moment'
 import './MainToDoTemplate.scss'
 
 class MainToDoTemplate extends Component {
+    
+    state = {
+        toDoList: [],
+      }
+
     componentDidMount() {
-        customAxios.get('/api/main-to-do')
+        this.fetchData();
+    }
+
+    fetchData = () => {
+        customAxios.get('/api/main-to-do/')
         .then((r) => {
-          console.log('custom', r.data)
-  
-          
+            this.setState({
+                toDoList: r.data || [],
+            })
         })
     }
 
     handleDeleteItem = (id) => {
-        const newList = this.props.toDoList.filter((list) => {
-            return list.id !== id
+        customAxios.delete(`/api/main-to-do/${id}`)
+        .then(() => {
+            this.fetchData();
         })
-        this.props.changeMainToDoList(newList)
     }
 
     handleSubmit = (newItem) => {
-        const newList = [...this.props.toDoList, newItem]
-        this.props.changeMainToDoList(newList)
+        customAxios.post('/api/main-to-do/', newItem)
+            .then(() => {
+                this.fetchData();
+            })
     }
 
     handleCheckItem = (id) => {
-        const newList = this.props.toDoList.map((list) => {
-            if( list.id === id ) {
-                if(list.checkedTime) list.checkedTime = null
-                else list.checkedTime = moment().format('YYYY-MM-DD')
-                return list
-            } else return list
+        const target = this.state.toDoList.find((row) => {
+            return row.toDoId == id
         })
-        this.props.changeMainToDoList(newList)
+
+        customAxios.put(`/api/main-to-do/${id}/`, {
+            contents: target.contents,
+            checkedDate: target.checkedDate ? '' : moment().format('YYYY-MM-DD')
+        })
+        .then(() => {
+            this.fetchData();
+        })
     }
 
     modifyItemContent = (id, content) => {
-        const newList = this.props.toDoList.map((list) => {
-            if( list.id === id ) {
-                const newList = {
-                    ...list, value: content
-                }
-                return newList
-            } else return list
+        
+        customAxios.put(`/api/main-to-do/${id}/`, {
+            contents: content,
         })
-        this.props.changeMainToDoList(newList)
+        .then(() => {
+            this.fetchData();
+        })
     }
 
     render() {
-        const { toDoList } = this.props;
-
         return(
             <div className="mainToDoTemplate">
                 <UserInfo/>
@@ -62,7 +72,7 @@ class MainToDoTemplate extends Component {
                 />
                 <div className="mainToDoBody">
                     <ToDoList
-                        toDoList={toDoList}
+                        toDoList={this.state.toDoList}
                         handleDeleteItem={this.handleDeleteItem}
                         handleCheckItem={this.handleCheckItem}
                         modifyItemContent={this.modifyItemContent}

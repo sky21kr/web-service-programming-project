@@ -25,6 +25,9 @@ from classManager.views import MainToDoTableViewSet
 # router = routers.DefaultRouter()
 # router.register('class', views.ClassTableView, 'class')
 
+router = routers.DefaultRouter()
+router.register('api/main-to-do', MainToDoTableViewSet)
+
 class HomeTemplateView(TemplateView):
     template_name = 'index.html'
 
@@ -33,5 +36,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/class', ClassTableViewSet.as_view({'get':'list', 'post':'create'})),
     path('api/to-do', ToDoTableViewSet.as_view({'get':'list', 'post':'create'})),
-    path('api/main-to-do', MainToDoTableViewSet.as_view({'get':'list', 'post':'create'}))
+    path('',include(router.urls)),
+    # path('api/main-to-do', MainToDoTableViewSet.as_view({'get':'list', 'post':'create', 'delete': 'destroy'}))
 ]

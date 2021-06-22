@@ -5,7 +5,6 @@ import AddClassTemplate from '@/components/AddClassTemplate/AddClassTemplate'
 import React, { Component } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import moment from 'moment'
-import axios from 'axios';
 import { customAxios } from '@/lib/customAxios';
 import './App.scss'
 
@@ -22,10 +21,7 @@ class App extends Component {
         console.log('custom', r)
       })
 
-    customAxios.get('/api/main-to-do')
-      .then((r) => {
-        console.log('custom', r.data)
-      })
+
 
     let newClassList = []
     if (localStorage.getItem("classList")) {
