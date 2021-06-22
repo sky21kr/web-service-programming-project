@@ -18,11 +18,26 @@ class MainToDoTemplate extends Component {
 
     fetchData = () => {
         customAxios.get('/api/main-to-do/')
-        .then((r) => {
-            this.setState({
-                toDoList: r.data || [],
+            .then((r) => {
+                const deleteToDoId = r.data.filter((toDoItem) => {
+                    if(toDoItem.checkedDate !== '' && moment(toDoItem.checkedDate).add(1, 'd') <= moment()) return true
+                    return false
+                }).map((d) => d.toDoId)
+
+
+                deleteToDoId.forEach((toDoId) => {
+                    customAxios.delete(`/api/main-to-do/${toDoId}`)
+                })
+
+                const toDoList = r.data.filter((toDoItem) => {
+                    if(toDoItem.checkedDate !== '' && moment(toDoItem.checkedDate).add(1, 'd') <= moment()) return false
+                    return true
+                })
+
+                this.setState({
+                    toDoList: toDoList || [],
+                })
             })
-        })
     }
 
     handleDeleteItem = (id) => {

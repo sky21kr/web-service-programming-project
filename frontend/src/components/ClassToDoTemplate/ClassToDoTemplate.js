@@ -24,8 +24,25 @@ class ClassToDoTemplate extends Component {
     fetchToDo = () => {
         customAxios.get(`/api/to-do`)
           .then((r) => {
+
+            const classToDoList = r.data.filter((todo) => todo.classId === this.props.classId)
+
+            const deleteToDoId = classToDoList.filter((toDoItem) => {
+                if(toDoItem.checkedDate !== '' && moment(toDoItem.checkedDate).add(1, 'd') <= moment()) return true
+                return false
+            }).map((d) => d.toDoId)
+
+            deleteToDoId.forEach((toDoId) => {
+                customAxios.delete(`/api/to-do/${toDoId}`)
+            })
+
+            const toDoList = classToDoList.filter((toDoItem) => {
+                if(toDoItem.checkedDate !== '' && moment(toDoItem.checkedDate).add(1, 'd') <= moment()) return false
+                return true
+            })
+
             this.setState({
-                toDoList: r.data.filter((todo) => todo.classId === this.props.classId)
+                toDoList: toDoList || [],
             })
           })
     }
