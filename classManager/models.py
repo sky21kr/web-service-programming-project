@@ -19,3 +19,8 @@ class MainToDoTable(models.Model):
     toDoId = models.AutoField(primary_key=True)
     contents = models.TextField()
     checkedDate = models.TextField(blank=True)
+
+class UserTable(models.Model):
+    userName = models.TextField(blank=True)
+    schoolName = models.TextField(blank=True)
+    major = models.TextField(blank=True)

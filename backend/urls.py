@@ -20,6 +20,7 @@ from django.views.generic import TemplateView
 from classManager.views import ClassTableViewSet
 from classManager.views import ToDoTableViewSet
 from classManager.views import MainToDoTableViewSet
+from classManager.views import UserTableViewSet
 
 
 # router = routers.DefaultRouter()
@@ -29,6 +30,7 @@ router = routers.DefaultRouter()
 router.register('api/main-to-do', MainToDoTableViewSet)
 router.register('api/to-do', ToDoTableViewSet)
 router.register('api/class', ClassTableViewSet)
+router.register('api/user', UserTableViewSet)
 
 class HomeTemplateView(TemplateView):
     template_name = 'index.html'
@@ -36,8 +38,8 @@ class HomeTemplateView(TemplateView):
 urlpatterns = [
     path('', HomeTemplateView.as_view(), name='home'),
     path('admin/', admin.site.urls),
+    path('',include(router.urls)),
     # path('api/class', ClassTableViewSet.as_view({'get':'list', 'post':'create'})),
     # path('api/to-do', ToDoTableViewSet.as_view({'get':'list', 'post':'create'})),
-    path('',include(router.urls)),
     # path('api/main-to-do', MainToDoTableViewSet.as_view({'get':'list', 'post':'create', 'delete': 'destroy'}))
 ]

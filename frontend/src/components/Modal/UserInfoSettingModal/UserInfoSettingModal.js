@@ -14,6 +14,26 @@ class UserInfoSetting extends Component {
         name: this.props.name,
     }
 
+    componentDidUpdate = (prevProps, prevState) => { //componentDidUpdate가 props의 변과를 감지한다
+        if (this.props.name !== prevProps.name) { //하위컴포넌트가 받은 props값 적어주기(둘다)
+          this.setState({
+            name: this.props.name
+          });
+        }
+
+        if (this.props.majorName !== prevProps.majorName) { //하위컴포넌트가 받은 props값 적어주기(둘다)
+        this.setState({
+            majorName: this.props.majorName
+        });
+        }
+
+        if (this.props.schoolName !== prevProps.schoolName) { //하위컴포넌트가 받은 props값 적어주기(둘다)
+        this.setState({
+            schoolName: this.props.schoolName
+        });
+        }
+      };
+
     handleChange = (e) => {
         const { value, name } = e.target
         this.setState({
@@ -84,6 +104,7 @@ class UserInfoSetting extends Component {
                             <div>
                                 학교
                                 <input
+                                    placeholder="학교"
                                     name="schoolName"
                                     defaultValue={this.props.schoolName}
                                     onChange={this.handleChange}
@@ -92,6 +113,7 @@ class UserInfoSetting extends Component {
                             <div>
                                 학과
                                 <input
+                                    placeholder="학과"
                                     name="majorName"
                                     defaultValue={this.props.majorName}
                                     onChange={this.handleChange}
@@ -100,6 +122,7 @@ class UserInfoSetting extends Component {
                             <div>
                                 이름
                                 <input
+                                    placeholder="이름"
                                     name="name"
                                     defaultValue={this.props.name}
                                     onChange={this.handleChange}

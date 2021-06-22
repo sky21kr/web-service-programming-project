@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import ClassTable
 from .models import ToDoTable
 from .models import MainToDoTable
+from .models import UserTable
 
 
 
@@ -18,4 +19,9 @@ class ToDoTableSerializer(serializers.ModelSerializer):
 class MainToDoTableSerializer(serializers.ModelSerializer):
     class Meta:
         model = MainToDoTable
+        fields = '__all__'
+
+class UserTableSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserTable
         fields = '__all__'
